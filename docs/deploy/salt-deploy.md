@@ -353,11 +353,25 @@ sudo apt-get install salt-minion
     #   - saltmaster2.yourdomain.com
 
     # Minion 的唯一标识符
-    # 默认情况下，Salt Minion 会使用其 FQDN 作为 ID
+    # 默认情况下，Salt Minion 会使用其 FQDN (Fully Qualified Domain Name) 作为 ID
+    # FQDN 示例: web01.example.com, db-server.internal.company.org
     # 建议显式设置以确保唯一性和可预测性
+
+    # 选项 1: 使用 FQDN (推荐用于有正确 DNS 设置的环境)
     id: {{ grains['fqdn'] }}
-    # 或者使用自定义 ID：
+
+    # 选项 2: 使用主机名
+    # id: {{ grains['host'] }}
+
+    # 选项 3: 使用自定义命名规则
     # id: web-server-01.production
+    # id: {{ grains['environment'] }}-{{ grains['role'] }}-{{ grains['host'] }}
+
+    # 选项 4: 使用 IP 地址（不推荐，但在某些情况下有用）
+    # id: {{ grains['ip4_interfaces']['eth0'][0] }}
+
+    # 选项 5: 组合多个 grains 创建唯一 ID
+    # id: {{ grains['datacenter'] }}-{{ grains['role'] }}-{{ grains['host'] }}
 
     # Master 端口配置
     # master_port: 4506  # Returner Port，与 Master 的 ret_port 对应

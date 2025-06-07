@@ -151,7 +151,13 @@ rotate_aes_key: True
 master: saltmaster.yourdomain.com
 
 # Minion ID（建议显式设置）
+# FQDN = Fully Qualified Domain Name，如: web01.example.com
 id: {{ grains['fqdn'] }}
+
+# 其他 ID 选项:
+# id: {{ grains['host'] }}                    # 仅主机名
+# id: prod-web-{{ grains['host'] }}           # 自定义前缀
+# id: {{ grains['ip4_interfaces']['eth0'][0] }} # IP 地址（不推荐）
 
 # 端口配置
 master_port: 4506
@@ -214,34 +220,34 @@ recon_randomize: True
 grains:
   # 服务器角色
   role: webserver
-  
+
   # 环境标识
   environment: production
-  
+
   # 数据中心位置
   datacenter: us-east-1
   availability_zone: us-east-1a
-  
+
   # 团队信息
   team: devops
   owner: infrastructure
-  
+
   # 应用信息
   app_stack: nginx-php-mysql
   app_version: "2.1.0"
-  
+
   # 硬件信息
   server_type: virtual
   instance_size: large
-  
+
   # 网络信息
   network_zone: dmz
   subnet: web-tier
-  
+
   # 业务信息
   cost_center: "12345"
   project: "web-platform"
-  
+
   # 监控标签
   monitoring: enabled
   backup: enabled
